@@ -1,0 +1,187 @@
+.careers-section {
+  padding: 60px 6%;
+  background: #f9fafb;
+  font-family: "Inter", sans-serif;
+
+}
+
+/* Header */
+.careers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+ 
+}
+
+.careers-header h2 {
+    font-size: 35px;
+  font-weight: 700;
+}
+
+.explore-all {
+  font-size: 14px;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+/* Status */
+.status,
+.error {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.error {
+  color: red;
+}
+
+/* Grid */
+.careers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Card */
+.career-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.career-card:hover {
+  transform: translateY(-6px);
+}
+
+.career-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.career-content {
+  padding: 18px;
+}
+
+.career-content h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.career-content p {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.career-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* AI Banner */
+.career-ai-banner {
+  margin-top: 60px;
+  padding: 44px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(
+    90deg,
+    #020617 0%,      /* Deep Navy */
+    #0f172a 50%,     /* Rich Navy */
+    #ea580c 100%     /* Burnt Orange */
+  );
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.45);
+}
+
+/* Content */
+.career-ai-content {
+  max-width: 62%;
+}
+
+/* AI Badge */
+.career-ai-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+}
+
+/* Title */
+.career-ai-content h2 {
+  margin: 18px 0 12px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Description */
+.career-ai-content p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  opacity: 0.92;
+  color: #e5e7eb;
+}
+
+/* CTA Button */
+.career-ai-button {
+  margin-top: 18px;
+  padding: 12px 22px;
+  background: #ffffff;
+  color: #ea580c;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.career-ai-button:hover {
+  background: #ffedd5;
+  transform: translateY(-2px);
+}
+
+/* AI Icon */
+.career-ai-icon {
+  font-size: 76px;
+  color: #ffffff;
+  opacity: 0.95;
+  text-shadow: 0 0 32px rgba(234, 88, 12, 0.55);
+}
+
+/* CTA Wrapper (if used later) */
+.cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Primary CTA */
+.cta-primary {
+  background: #ffffff;
+  color: #020617;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.cta-primary:hover {
+  background: #ffedd5;
+  transform: translateY(-2px);
+}

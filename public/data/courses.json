@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "level": "Beginner",
+    "trending": true,
+    "image": "/images/course-web.jpg",
+    "category": "Web Development",
+    "rating": "4.8",
+    "title": "Complete Web Development Bootcamp",
+    "description": "Learn HTML, CSS, JavaScript, React, Node.js and become a full-stack developer with hands-on projects.",
+    "duration": "12 weeks",
+    "enrolled": "15,000+ enrolled",
+    "price": "$2,999"
+  },
+  {
+    "id": 2,
+    "level": "Intermediate",
+    "trending": true,
+    "image": "/images/course-data.jpg",
+    "category": "Data Science",
+    "rating": "4.9",
+    "title": "Data Science & Machine Learning",
+    "description": "Master Python, ML algorithms, data visualization and build real-world projects using TensorFlow and PyTorch.",
+    "duration": "16 weeks",
+    "enrolled": "12,000+ enrolled",
+    "price": "$3,499"
+  },
+  {
+    "id": 3,
+    "level": "Advanced",
+    "trending": true,
+    "image": "/images/course-python.jpg",
+    "category": "Programming",
+    "rating": "4.6",
+    "title": "Advanced Python Programming",
+    "description": "Deep dive into Python with advanced concepts, design patterns and best practices.",
+    "duration": "8 weeks",
+    "enrolled": "8,500+ enrolled",
+    "price": "$2,499"
+  }
+]

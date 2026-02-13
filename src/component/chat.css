@@ -1,0 +1,58 @@
+/* OUTER SECTION – SAME AS COURSE SECTION */
+.chat-wrapper {
+  margin: 60px auto;
+  padding: 0 20px; /* page side spacing */
+}
+
+/* MAIN CHAT CONTAINER – SAME WIDTH & ROUNDING */
+.chat-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 60px;
+  background: linear-gradient(
+    90deg,
+    #8b3cf6 0%,
+    #6d28d9 45%,
+    #4c1d95 100%
+  );
+  border-radius: 22px;
+}
+
+/* CHAT BOX */
+.chat-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 260px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* BOT MESSAGE */
+.bot {
+  background: #eef2ff;
+  color: #1f2937;
+  padding: 14px 16px;
+  border-radius: 12px;
+  max-width: 75%;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* INPUT */
+.chat-container input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* RESPONSIVE – SAME AS COURSE SECTION */
+@media (max-width: 768px) {
+  .chat-container {
+    padding: 32px 20px;
+  }
+}

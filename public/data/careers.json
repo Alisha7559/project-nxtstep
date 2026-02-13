@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Project Manager",
+    "description": "Plans, executes, and closes projects on time and within scope.",
+    "salary": "$72,380",
+    "jobs": "6,984",
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+  },
+  {
+    "id": 2,
+    "title": "Data Analyst",
+    "description": "Collects, cleans, and interprets data using SQL, Excel, and BI tools.",
+    "salary": "$50,888",
+    "jobs": "717",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+  },
+  {
+    "id": 3,
+    "title": "Data Scientist",
+    "description": "Analyzes large datasets using statistics and machine learning.",
+    "salary": "$68,869",
+    "jobs": "412",
+    "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c"
+  },
+  {
+    "id": 4,
+    "title": "Machine Learning Engineer",
+    "description": "Builds and deploys scalable machine learning models.",
+    "salary": "$92,450",
+    "jobs": "328",
+    "image": "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7"
+  }
+]

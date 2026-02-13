@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "level": "Bachelor",
+    "university": "University of London",
+    "title": "Bachelor of Science in Computer Science",
+    "description": "A comprehensive computer science degree covering programming, algorithms, and software engineering.",
+    "duration": "3–6 years",
+    "price": "$15,000",
+    "image": "/images/degree4.png"
+  },
+  {
+    "id": 2,
+    "level": "Master",
+    "university": "University of Illinois",
+    "title": "Master of Business Administration",
+    "description": "An accredited MBA program focusing on leadership, strategy, and global business management.",
+    "duration": "2–3 years",
+    "price": "$22,000",
+    "image": "/images/degree2.jpg"
+  },
+  {
+    "id": 3,
+    "level": "Master",
+    "university": "University of Michigan",
+    "title": "Master of Data Science",
+    "description": "Advanced data science program covering machine learning, big data, and statistical analysis.",
+    "duration": "1–2 years",
+    "price": "$18,000",
+    "image": "/images/degree3.jpg"
+  }
+]
