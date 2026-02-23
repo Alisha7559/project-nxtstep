@@ -1,6 +1,10 @@
+
 const Courses = () => {
   return (
-    <div>courses</div>
+    <>
+    <div>Courses</div>
+  
+    </>
   )
 }
 export default Courses;
