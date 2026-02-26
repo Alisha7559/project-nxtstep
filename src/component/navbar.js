@@ -1,24 +1,27 @@
+
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaComments } from "react-icons/fa";
 import "./navbar.css";
-import logo from "../component/images/logofinall.png"
+import logo from "../component/images/logofinall.png";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar-fixed">
       <div className="navbar-container">
 
-        <Link to="/" className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <img src={logo} alt="Logo" className="logo-img" />
-          
-        </Link>
+        </div>
 
         <ul className="nav-links">
-          <li><Link to="/courses">Courses</Link></li>
-          <li><Link to="/institutions">Institutions</Link></li>
-          <li><Link to="/degrees">Online Degrees</Link></li>
-          <li><Link to="/roles">Explore Roles</Link></li>
+          <li onClick={() => navigate("/courses")}>Courses</li>
+          <li onClick={() => navigate("/institutions")}>Institutions</li>
+          <li onClick={() => navigate("/degrees")}>Online Degrees</li>
+          <li onClick={() => navigate("/roles")}>Explore Roles</li>
         </ul>
 
         <div className="navbar-search">
@@ -26,11 +29,28 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-actions">
-          <Link to="/chatbot" className="icon-btn">
+
+          <div
+            className="icon-btn"
+            onClick={() => navigate("/chatbot")}
+          >
             <FaComments size={20} />
-          </Link>
-          <Link to="/login" className="login-btn">Login</Link>
-          <Link to="/signup" className="signup-btn">Sign Up</Link>
+          </div>
+
+          <button
+            className="login-btn"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+
+          <button
+            className="signup-btn"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </button>
+
         </div>
 
       </div>

@@ -99,7 +99,7 @@
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  /* gap: 14px; */
 }
 
 /* Icon */
@@ -137,10 +137,9 @@
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
 }
-.logo{
-  size: 100px;
-}
+
 .logo-img{
-  height: 80px;
-  width: 100px;
+  height: 60px;
+  width: 70px;
+
 }
