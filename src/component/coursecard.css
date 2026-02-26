@@ -24,11 +24,26 @@
   color: #64748b;
 }
 
+.courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
 .view-all {
-  background: none;
   border: none;
-  font-weight: 500;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2563eb;
   cursor: pointer;
+  padding: 6px 8px;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
 }
 
 .courses-grid {
