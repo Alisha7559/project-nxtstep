@@ -99,7 +99,7 @@
 .navbar-actions {
   display: flex;
   align-items: center;
-  /* gap: 14px; */
+  gap: 14px;
 }
 
 /* Icon */
