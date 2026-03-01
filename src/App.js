@@ -16,6 +16,7 @@ import ExploreCareers from "./component/ExploreCareers";
 import FAQ from "./component/faq";
 import Review from "./component/review";
 import About from "./component/about";
+import EnquiryForm from "./component/EnquiryForm";
 
 import CoursesPage from "./component/coursespage";   // ✅ MOVE HERE
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/course/:id" element={<CourseDetail />} />
+        <Route path="/enquiry/:id" element={<EnquiryForm />} />
       </Routes>
 
       <Footer />
