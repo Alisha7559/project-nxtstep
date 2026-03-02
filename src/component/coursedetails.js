@@ -15,33 +15,22 @@ import {
 } from "@mui/material";
 
 export default function CourseDetail() {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { course, loading, error } = useCourseDetail(id);
 
-  /* ================= ENQUIRE BUTTON ================= */
-
   const handleEnquire = () => {
-  if (!course) return;
+    const student = localStorage.getItem("student");
 
-  // Check if token cookie exists (simple check)
-  const isLoggedIn = document.cookie.includes("token");
-
-  if (isLoggedIn) {
-    navigate(`/enquiry/${course._id}`);
-  } else {
-    navigate("/login", {
-      state: {
-        courseId: course._id
-      }
-    });
-  }
-};
-
-
-  /* ================= LOADING ================= */
+    if (student) {
+      navigate(`/enquiry/${id}`);
+    } else {
+      navigate("/login", {
+        state: { courseId: id },
+      });
+    }
+  };
 
   if (loading)
     return (
@@ -49,8 +38,6 @@ export default function CourseDetail() {
         <CircularProgress sx={{ color: "#f97316" }} />
       </Box>
     );
-
-  /* ================= ERROR ================= */
 
   if (error)
     return (
@@ -66,8 +53,6 @@ export default function CourseDetail() {
       </Typography>
     );
 
-  /* ================= UI ================= */
-
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#f1f5f9", py: 10 }}>
       <Container maxWidth="md">
@@ -80,7 +65,6 @@ export default function CourseDetail() {
             border: "1px solid #e2e8f0",
           }}
         >
-
           <Box
             component="img"
             src={`http://localhost:7000/${course.images?.[0]}`}
@@ -169,8 +153,8 @@ export default function CourseDetail() {
                   height: 50,
                   "&:hover": {
                     borderColor: "#ea580c",
-                    backgroundColor: "#fff7ed"
-                  }
+                    backgroundColor: "#fff7ed",
+                  },
                 }}
               >
                 Enquire Now
@@ -185,15 +169,14 @@ export default function CourseDetail() {
                   background: "#f97316",
                   height: 50,
                   "&:hover": {
-                    background: "#ea580c"
-                  }
+                    background: "#ea580c",
+                  },
                 }}
               >
                 Register Now
               </Button>
             </Grid>
           </Grid>
-
         </Paper>
       </Container>
     </Box>

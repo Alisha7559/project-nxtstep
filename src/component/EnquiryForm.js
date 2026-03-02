@@ -1,198 +1,198 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const Enquiry = () => {
+const EnquiryForm = () => {
   const { id } = useParams();
 
-  const [instituteId, setInstituteId] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [course, setCourse] = useState(null);
+  const [instituteId, setInstituteId] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     qualification: "",
-    description: "",
+    description: ""
   });
 
   /* ================= FETCH COURSE ================= */
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
+        console.log("Course ID:", id); // 🔍 debug
+
         const res = await axios.get(
-          `http://localhost:7000/api/course/${id}`,
-          { withCredentials: true }
+          `http://localhost:7000/api/course/${id}`,   // ✅ CORRECT TEMPLATE STRING
+          { withCredentials: true }                   // remove if not using auth
         );
 
-        setInstituteId(res.data.institution);
-      } catch {
-        setMessage("Course not found");
+        const courseData = res.data.data;
+
+        setCourse(courseData);
+
+        // ✅ Handle populated institution
+        if (courseData?.institution?._id) {
+          setInstituteId(courseData.institution._id);
+        } else if (courseData?.institution) {
+          setInstituteId(courseData.institution);
+        } else {
+          setInstituteId("");
+        }
+        console.log();
+        
+
+      } catch (error) {
+        console.error("Fetch error:", error.response?.data || error.message);
+        setMessage(
+          error.response?.data?.message || "Failed to load course"
+        );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCourse();
+    if (id) {
+      fetchCourse();
+    }
   }, [id]);
 
+  /* ================= HANDLE INPUT ================= */
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   /* ================= SUBMIT ================= */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "http://localhost:7000/api/enquiry",
+      const res = await axios.post(
+        `http://localhost:7000/api/enquiry`,
         {
           courseId: id,
-          instituteId,
-          ...formData,
+          instituteId: instituteId,
+          name: formData.name,
+          phone: formData.phone,
+          qualification: formData.qualification,
+          description: formData.description
         },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }  // remove if no auth
       );
 
-      setMessage("Enquiry submitted successfully!");
+      setMessage(res.data.message || "Enquiry submitted successfully");
+
       setFormData({
         name: "",
         phone: "",
         qualification: "",
-        description: "",
+        description: ""
       });
 
-    } catch {
-      setMessage("Something went wrong");
+    } catch (error) {
+      console.error("Submit error:", error.response?.data || error.message);
+
+      setMessage(
+        error.response?.data?.message || "Failed to submit enquiry"
+      );
     }
   };
 
-  if (loading)
-    return (
-      <div style={{ textAlign: "center", marginTop: "100px", fontSize: "18px" }}>
-        Loading...
-      </div>
-    );
+  /* ================= UI ================= */
+
+  if (loading) {
+    return <div style={{ padding: 40 }}>Loading...</div>;
+  }
+
+  if (!course) {
+    return <div style={{ padding: 40 }}>Course not found</div>;
+  }
 
   return (
-    <div
-      style={{
-        maxWidth: "500px",
-        margin: "60px auto",
-        padding: "30px",
-        borderRadius: "12px",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
-        backgroundColor: "#ffffff",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          color: "#1976d2",
-        }}
-      >
-        Enquiry Form
-      </h2>
+    <div style={{ padding: 40, maxWidth: 600, margin: "auto" }}>
+      <h2>Course Enquiry</h2>
+      <h3 style={{ marginBottom: 20 }}>{course.courseName}</h3>
 
       {message && (
-        <p
-          style={{
-            textAlign: "center",
-            marginBottom: "15px",
-            color: message.includes("success") ? "green" : "red",
-            fontWeight: "500",
-          }}
-        >
+        <p style={{ color: "red", marginBottom: 15 }}>
           {message}
         </p>
       )}
 
       <form onSubmit={handleSubmit}>
-
         <input
           type="text"
-          placeholder="Name"
-          required
+          name="name"
+          placeholder="Your Name"
           value={formData.name}
-          onChange={(e)=>
-            setFormData({...formData, name:e.target.value})
-          }
-          style={inputStyle}
-        />
-
-        <input
-          type="tel"
-          placeholder="Phone"
+          onChange={handleChange}
           required
-          value={formData.phone}
-          onChange={(e)=>
-            setFormData({...formData, phone:e.target.value})
-          }
           style={inputStyle}
         />
 
         <input
           type="text"
-          placeholder="Qualification"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={handleChange}
           required
+          style={inputStyle}
+        />
+
+        <input
+          type="text"
+          name="qualification"
+          placeholder="Qualification"
           value={formData.qualification}
-          onChange={(e)=>
-            setFormData({...formData, qualification:e.target.value})
-          }
+          onChange={handleChange}
+          required
           style={inputStyle}
         />
 
         <textarea
+          name="description"
           placeholder="Message"
-          required
           value={formData.description}
-          onChange={(e)=>
-            setFormData({...formData, description:e.target.value})
-          }
+          onChange={handleChange}
+          required
           rows="4"
-          style={{ ...inputStyle, resize: "none" }}
+          style={inputStyle}
         />
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "6px",
-            border: "none",
-            backgroundColor: "#1976d2",
-            color: "#ffffff",
-            fontWeight: "bold",
-            fontSize: "15px",
-            cursor: "pointer",
-            transition: "0.3s",
-          }}
-          onMouseOver={(e) =>
-            (e.target.style.backgroundColor = "#125aa0")
-          }
-          onMouseOut={(e) =>
-            (e.target.style.backgroundColor = "#1976d2")
-          }
-        >
-          Submit
+        <button type="submit" style={buttonStyle}>
+          Submit Enquiry
         </button>
-
       </form>
     </div>
   );
 };
 
-/* Reusable input style */
+/* ================= STYLES ================= */
+
 const inputStyle = {
   width: "100%",
   padding: "10px",
   marginBottom: "15px",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "14px",
-  outline: "none",
-  boxSizing: "border-box",
+  borderRadius: "5px",
+  border: "1px solid #ccc"
 };
 
-export default Enquiry;
+const buttonStyle = {
+  width: "100%",
+  padding: "12px",
+  backgroundColor: "#020617",
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer"
+};
+
+export default EnquiryForm;

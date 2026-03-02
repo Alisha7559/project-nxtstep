@@ -1,6 +1,6 @@
 import "./auth.css";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -28,14 +28,9 @@ const Login = () => {
         "http://localhost:7000/api/students/login",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({
-            email,
-            password
-          })
+          body: JSON.stringify({ email, password })
         }
       );
 
@@ -47,15 +42,21 @@ const Login = () => {
         return;
       }
 
-      // ✅ LOGIN SUCCESS
+      // ✅ STORE LOGIN DATA
+      localStorage.setItem("student", JSON.stringify(data.student));
+      localStorage.setItem("isLoggedIn", "true");
 
+      // 🔥 Force Navbar update
+      window.dispatchEvent(new Event("storage"));
+
+      // ✅ Redirect back
       if (location.state?.courseId) {
         navigate(`/enquiry/${location.state.courseId}`);
       } else {
         navigate("/courses");
       }
 
-    } catch (error) {
+    } catch {
       setError("Server error");
     }
 
@@ -81,18 +82,19 @@ const Login = () => {
         onChange={(e)=>setPassword(e.target.value)}
       />
 
-      <button
-        onClick={handleLogin}
-        disabled={loading}
-      >
+      <button onClick={handleLogin} disabled={loading}>
         {loading ? "Logging in..." : "Login"}
       </button>
 
-      {error && (
-        <p style={{color:"red"}}>
-          {error}
-        </p>
-      )}
+      {error && <p style={{color:"red"}}>{error}</p>}
+
+      {/* ✅ SIGNUP OPTION */}
+      <p style={{ marginTop: "15px", textAlign: "center" }}>
+        Don't have an account?{" "}
+        <Link to="/signup" style={{ color: "#1976d2", fontWeight: "bold" }}>
+          Sign Up
+        </Link>
+      </p>
 
     </div>
   );

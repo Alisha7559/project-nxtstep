@@ -11,18 +11,18 @@ import {
 const Footer = () => {
   return (
     <footer className="footer">
-      {/* Newsletter */}
-      <div className="footer-newsletter">
-        <div>
-          <h3>Stay Updated</h3>
-          <p>Subscribe to get the latest courses and career tips</p>
-        </div>
+    {/* //   Newsletter
+    //   <div className="footer-newsletter">
+    //     <div>
+    //       <h3>Stay Updated</h3>
+    //       <p>Subscribe to get the latest courses and career tips</p>
+    //     </div>
 
-        <div className="newsletter-form">
-          <input type="email" placeholder="Enter your email" />
-          <button>Subscribe</button>
-        </div>
-      </div>
+    //     <div className="newsletter-form">
+    //       <input type="email" placeholder="Enter your email" />
+    //       <button>Subscribe</button>
+    //     </div>
+    //   </div> */}
 
       {/* Footer Content */}
       <div className="footer-content">
