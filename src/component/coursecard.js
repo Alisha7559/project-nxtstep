@@ -98,7 +98,7 @@ export default function CourseCard() {
                   <span>
                     <FaUsers /> {course.totalSeats || 0} Seats
                   </span>
-
+                  
                 </div>
 
                 <div className="course-footer">

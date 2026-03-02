@@ -142,6 +142,22 @@ export default function CourseDetail() {
                 {course.mode}
               </Typography>
             </Grid>
+             <Grid item xs={6} sm={3}>
+              <Typography variant="body2" color="text.secondary">
+                Duration
+              </Typography>
+              <Typography fontWeight="600">
+                {course.duration}
+              </Typography>
+            </Grid>
+             <Grid item xs={6} sm={3}>
+              <Typography variant="body2" color="text.secondary">
+                Skills
+              </Typography>
+              <Typography fontWeight="600">
+                {course.skills}
+              </Typography>
+            </Grid>
 
             <Grid item xs={6} sm={3}>
               <Typography variant="body2" color="text.secondary">
@@ -152,9 +168,17 @@ export default function CourseDetail() {
               </Typography>
             </Grid>
           </Grid>
-
+             
           <Divider sx={{ mb: 4 }} />
-
+             <Typography
+            sx={{
+              color: "#475569",
+              lineHeight: 1.7,
+              mb: 5
+            }}
+          >
+            {course.modules}
+          </Typography>
           {/* DESCRIPTION */}
           <Typography
             sx={{
