@@ -29,7 +29,7 @@ export default function Cards({ courses = [] }) {
           subtitle={course.subtitle}
 
           features={course.features}
-
+          courseId={course._id}
         />
 
       ))}

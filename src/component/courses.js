@@ -1,13 +1,18 @@
 
 import { motion } from "framer-motion";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ExactSecondVideoCard({
   image,
   title,
   subtitle,
-  features
-}) {
+  features,
+  courseId
+}) 
+
+{
+  const navigate = useNavigate();
   return (
     <motion.div
       className="sv-card"
@@ -24,7 +29,7 @@ export default function ExactSecondVideoCard({
             <li key={i}>{f}</li>
           ))}
         </ul>
-        <span className="cta glass">View More </span>
+        <span className="cta glass"onClick={() => navigate(`/course/${courseId}`)} >View More </span>
       </div>
 
       {/* IMAGE COVER */}

@@ -19,7 +19,7 @@ export default function CourseCard() {
       .then((data) => {
 
         console.log("COURSES:", data.data);
-        setCourses(data.data);
+        setCourses(Array.isArray(data.data) ? data.data : []);
 
       })
       .catch((err) => console.error(err));
@@ -48,7 +48,7 @@ export default function CourseCard() {
 
       <div className="courses-grid">
 
-        {courses.slice(0, 3).map((course) => {
+        {(courses || []).slice(0, 3).map((course) => {
 
           const imgSrc =
             course.images && course.images.length > 0
