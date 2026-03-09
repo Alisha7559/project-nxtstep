@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaComments, FaUserCircle } from "react-icons/fa";
+import { useNavigate, Link } from "react-router-dom";
+import { FaComments, FaUserCircle, FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import "./navbar.css";
 import logo from "../component/images/logofinall.png";
 
 const Navbar = () => {
 
   const navigate = useNavigate();
+
   const [student, setStudent] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
 
@@ -30,24 +34,81 @@ const Navbar = () => {
     navigate("/");
   };
 
+  /* 🔎 SEARCH FUNCTION */
+
+  const handleSearch = (e) => {
+
+    e.preventDefault();
+
+    if (!search.trim()) return;
+
+    navigate(`/courses?search=${search}`);
+
+    setSearch("");
+
+  };
+
   return (
+
     <nav className="navbar-fixed">
+
       <div className="navbar-container">
+
+        {/* LOGO */}
 
         <div className="logo" onClick={() => navigate("/")}>
           <img src={logo} alt="Logo" className="logo-img" />
         </div>
 
-        <ul className="nav-links">
-          <li onClick={() => navigate("/courses")}>Courses</li>
-          <li onClick={() => navigate("/institutions")}>Institutions</li>
-          <li onClick={() => navigate("/degrees")}>Online Degrees</li>
-          <li onClick={() => navigate("/roles")}>Explore Roles</li>
+        {/* HAMBURGER */}
+
+        <div
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
+        </div>
+
+        {/* NAV LINKS */}
+
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+
+          <li>
+            <Link to="/" onClick={()=>setMenuOpen(false)}>Home</Link>
+          </li>
+
+          <li>
+            <Link to="/courses" onClick={()=>setMenuOpen(false)}>Courses</Link>
+          </li>
+
+          <li>
+            <Link to="/institutions" onClick={()=>setMenuOpen(false)}>Institutions</Link>
+          </li>
+
+          <li>
+            <Link to="/degrees" onClick={()=>setMenuOpen(false)}>Degrees</Link>
+          </li>
+
         </ul>
 
-        <div className="navbar-search">
-          <input type="search" placeholder="Search courses..." />
-        </div>
+        {/* SEARCH */}
+
+        <form className="navbar-search" onSubmit={handleSearch}>
+
+          <input
+            type="search"
+            placeholder="Search courses..."
+            value={search}
+            onChange={(e)=>setSearch(e.target.value)}
+          />
+
+          <button type="submit" className="search-btn">
+            <FaSearch/>
+          </button>
+
+        </form>
+
+        {/* RIGHT SIDE */}
 
         <div className="navbar-actions">
 
@@ -75,57 +136,52 @@ const Navbar = () => {
               </button>
             </>
           ) : (
+
             <div style={{ position: "relative" }}>
+
               <div
                 style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
                 onClick={() => setShowDropdown(!showDropdown)}
               >
-                <FaUserCircle size={26} />
-                <span style={{ marginLeft: 6 }}>
-                  {student.name}
+                <FaUserCircle size={26}/>
+                <span style={{ marginLeft:6 }}>
+                  {student.studentname}
                 </span>
               </div>
 
               {showDropdown && (
-                <div style={dropdownStyle}>
+
+                <div className="dropdown">
+
                   <p><strong>Name:</strong> {student.studentname}</p>
+
                   <p><strong>Email:</strong> {student.email}</p>
-                  
-                  <hr />
-                  <button onClick={handleLogout} style={logoutBtn}>
+
+                  <hr/>
+
+                  <button
+                    onClick={handleLogout}
+                    className="logout-btn"
+                  >
                     Logout
                   </button>
+
                 </div>
+
               )}
+
             </div>
+
           )}
 
         </div>
+
       </div>
+
     </nav>
+
   );
-};
 
-const dropdownStyle = {
-  position: "absolute",
-  top: 40,
-  right: 0,
-  background: "#fff",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  borderRadius: 8,
-  width: 220,
-  padding: 15,
-  zIndex: 1000
-};
-
-const logoutBtn = {
-  width: "100%",
-  padding: 8,
-  border: "none",
-  borderRadius: 5,
-  background: "#f97316",
-  color: "#fff",
-  cursor: "pointer"
 };
 
 export default Navbar;

@@ -1,145 +1,186 @@
-/* ===== FIXED NAVBAR ===== */
-.navbar-fixed {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 72px;
-  z-index: 2000;
+/* ================= NAVBAR ================= */
 
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-
-  border-bottom: 1px solid #e5e7eb;
+.navbar-fixed{
+  width:100%;
+  position:sticky;
+  top:0;
+  background:#ffffff;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,0.06);
 }
 
-/* ===== CONTAINER ===== */
-.navbar-container {
-  max-width: 1280px;
-  height: 100%;
-  margin: auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-
-  padding: 0 32px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+.navbar-container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 40px;
 }
 
-/* ===== LOGO ===== */
+/* ================= LOGO ================= */
 
-
-
-/* ===== NAV LINKS ===== */
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  position: relative;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  text-decoration: none;
-  padding: 6px 0;
-  transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-  color: #0f172a;
-}
-
-/* underline animation */
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -8px;
-  width: 0;
-  height: 2px;
-  background: #0f172a;
-  transition: width 0.25s ease;
-}
-
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-/* ===== SEARCH ===== */
-.navbar-search {
-  flex: 1;
-  max-width: 420px;
-}
-
-.navbar-search input {
-  width: 100%;
-  padding: 10px 16px;
-
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-
-  font-size: 14px;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.navbar-search input:focus {
-  background: #ffffff;
-  border-color:#0f172a;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-/* ===== ACTION BUTTONS ===== */
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-/* Icon */
-.icon-btn {
-  background: #f3f4f6;
-  border-radius: 10px;
-  padding: 8px;
-  font-size: 18px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.icon-btn:hover {
-  background: #e5e7eb;
-}
-
-
-
-/* Signup */
-.signup-btn {
-  background: linear-gradient(135deg,#0f172a, #1d4ed8);
-  color: #ffffff;
-
-  padding: 9px 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.signup-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
+.logo{
+  cursor:pointer;
 }
 
 .logo-img{
-  height: 60px;
-  width: 70px;
+  width:70px;
+  height:auto;
+}
+
+/* ================= NAV LINKS ================= */
+
+.nav-links{
+  display:flex;
+  list-style:none;
+  gap:28px;
+  margin:0;
+  padding:0;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#0f172a;
+  font-weight:500;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:#ea580c;
+}
+
+/* ================= SEARCH ================= */
+
+.navbar-search{
+  position:relative;
+  margin-left:20px;
+}
+
+.navbar-search input{
+  padding:8px 35px 8px 12px;
+  border-radius:6px;
+  border:1px solid #e2e8f0;
+  outline:none;
+  width:200px;
+}
+
+.search-btn{
+  position:absolute;
+  right:8px;
+  top:6px;
+  border:none;
+  background:none;
+  cursor:pointer;
+  color:#0f172a;
+}
+
+.search-btn:hover{
+  color:#ea580c;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.navbar-actions{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* ICON BUTTON */
+
+.icon-btn{
+  cursor:pointer;
+  color:#0f172a;
+}
+
+.icon-btn:hover{
+  color:#ea580c;
+}
+
+/* LOGIN BUTTON */
+
+.login-btn{
+  background:none;
+  border:none;
+  color:#0f172a;
+  font-weight:500;
+  cursor:pointer;
+}
+
+/* SIGNUP BUTTON */
+
+.signup-btn{
+  background:#ea580c;
+  color:white;
+  border:none;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.signup-btn:hover{
+  background:#c2410c;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+  position:absolute;
+  top:40px;
+  right:0;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  border-radius:8px;
+  width:220px;
+  padding:15px;
+  z-index:1000;
+}
+
+.logout-btn{
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:5px;
+  background:#ea580c;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ================= HAMBURGER ================= */
+
+.hamburger{
+  display:none;
+  cursor:pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:900px){
+
+  .hamburger{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:70px;
+    left:0;
+    width:100%;
+    background:#fff;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    padding:20px 0;
+    display:none;
+    box-shadow:0 10px 20px rgba(0,0,0,0.08);
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+
+  .navbar-search{
+    display:none;
+  }
 
 }

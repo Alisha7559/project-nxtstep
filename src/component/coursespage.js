@@ -1,14 +1,12 @@
-
 import { useEffect, useState } from "react";
 import CourseCategorySection from "./coursecategory";
 import Cards from "./cards";
 import Head from "./header";
 
-export default function CoursesPage() {
+export default function CoursesPage({ type }) {
 
   const [courses, setCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
-
 
   useEffect(() => {
 
@@ -22,9 +20,15 @@ export default function CoursesPage() {
       .then(res => res.json())
       .then(data => {
 
-        console.log("COURSES:", data.data);
+        let courseData = data.data;
 
-        const mapped = data.data.map(course => ({
+        if (type === "degree") {
+          courseData = courseData.filter(course =>
+            course.subcategory?.name?.toLowerCase() === "degree"
+          );
+        }
+
+        const mapped = courseData.map(course => ({
 
           id: course._id,
 
@@ -35,13 +39,13 @@ export default function CoursesPage() {
 
           title: course.courseName,
 
-          subtitle: course.category?.name || "General",
+          subtitle: course.subcategory?.name || "General",
 
           features: [
             `Fees: ₹${course.fees}`,
             `Mode: ${course.mode}`,
             `Seats: ${course.totalSeats}`,
-            `Level: ${course.level}`
+            `Duration: ${course.duration}`
           ]
 
         }));
@@ -51,17 +55,19 @@ export default function CoursesPage() {
 
       });
 
-  }, []);
+  }, [type]);
 
   return (
     <>
-    <Head/>
+      <Head />
+
       <CourseCategorySection
         courses={courses}
         setCourses={setCourses}
         allCourses={allCourses}
       />
 
-      <Cards courses={courses} />    </>
+      <Cards courses={courses} />
+    </>
   );
 }
