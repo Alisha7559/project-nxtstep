@@ -83,3 +83,81 @@
     font-size: 24px;
   }
 }
+/* HAMBURGER */
+
+.hamburger{
+  display:none;
+  cursor:pointer;
+}
+
+/* SEARCH */
+
+.navbar-search{
+  display:flex;
+  align-items:center;
+  position:relative;
+}
+
+.search-btn{
+  position:absolute;
+  right:10px;
+  border:none;
+  background:none;
+  cursor:pointer;
+  color:#64748b;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+  position:absolute;
+  top:40px;
+  right:0;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  border-radius:8px;
+  width:220px;
+  padding:15px;
+  z-index:1000;
+}
+
+.logout-btn{
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:5px;
+  background:#f97316;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* MOBILE */
+
+@media (max-width:900px){
+
+  .hamburger{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:72px;
+    left:0;
+    width:100%;
+    background:#fff;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    padding:20px 0;
+    display:none;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+
+  .navbar-search{
+    display:none;
+  }
+
+}

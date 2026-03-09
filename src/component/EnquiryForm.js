@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Modal, Box, Typography, Button } from "@mui/material";
 
 const EnquiryForm = () => {
   const { id } = useParams();
@@ -9,6 +10,10 @@ const EnquiryForm = () => {
   const [instituteId, setInstituteId] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState("success"); // success | error
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,18 +27,15 @@ const EnquiryForm = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        console.log("Course ID:", id); // 🔍 debug
-
         const res = await axios.get(
-          `http://localhost:7000/api/course/${id}`,   // ✅ CORRECT TEMPLATE STRING
-          { withCredentials: true }                   // remove if not using auth
+          `http://localhost:7000/api/course/${id}`,
+          { withCredentials: true }
         );
 
         const courseData = res.data.data;
 
         setCourse(courseData);
 
-        // ✅ Handle populated institution
         if (courseData?.institution?._id) {
           setInstituteId(courseData.institution._id);
         } else if (courseData?.institution) {
@@ -41,8 +43,6 @@ const EnquiryForm = () => {
         } else {
           setInstituteId("");
         }
-        console.log();
-        
 
       } catch (error) {
         console.error("Fetch error:", error.response?.data || error.message);
@@ -74,7 +74,7 @@ const EnquiryForm = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
+      await axios.post(
         `http://localhost:7000/api/enquiry`,
         {
           courseId: id,
@@ -84,10 +84,13 @@ const EnquiryForm = () => {
           qualification: formData.qualification,
           description: formData.description
         },
-        { withCredentials: true }  // remove if no auth
+        { withCredentials: true }
       );
 
-      setMessage(res.data.message || "Enquiry submitted successfully");
+      // SUCCESS MODAL
+      setModalType("success");
+      setModalMessage("Enquiry submitted successfully");
+      setModalOpen(true);
 
       setFormData({
         name: "",
@@ -99,9 +102,12 @@ const EnquiryForm = () => {
     } catch (error) {
       console.error("Submit error:", error.response?.data || error.message);
 
-      setMessage(
+      // ERROR MODAL
+      setModalType("error");
+      setModalMessage(
         error.response?.data?.message || "Failed to submit enquiry"
       );
+      setModalOpen(true);
     }
   };
 
@@ -171,6 +177,75 @@ const EnquiryForm = () => {
           Submit Enquiry
         </button>
       </form>
+
+      {/* ================= MODAL ================= */}
+
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 380,
+            bgcolor: "#ffffff",
+            borderRadius: 3,
+            p: 4,
+            textAlign: "center",
+            boxShadow: 24
+          }}
+        >
+          {/* ICON */}
+          <Typography
+            sx={{
+              fontSize: 45,
+              fontWeight: "bold",
+              color: modalType === "success" ? "#0f172a" : "#ea580c",
+              mb: 1
+            }}
+          >
+            {modalType === "success" ? "✓" : "✕"}
+          </Typography>
+
+          {/* TITLE */}
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              color: "#0f172a",
+              mb: 1
+            }}
+          >
+            {modalType === "success"
+              ? "Your Enquiry has been Received"
+              : "Error"}
+          </Typography>
+
+          {/* MESSAGE */}
+          <Typography sx={{ color: "#475569", mb: 3 }}>
+            {modalMessage}
+          </Typography>
+
+          {/* BUTTON */}
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => setModalOpen(false)}
+            sx={{
+              backgroundColor:
+                modalType === "success" ? "#0f172a" :"#ea580c",
+              height: 45,
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor:
+                  modalType === "success" ? "#0f172a" : "#ea580c"
+              }
+            }}
+          >
+            OK
+          </Button>
+        </Box>
+      </Modal>
     </div>
   );
 };
