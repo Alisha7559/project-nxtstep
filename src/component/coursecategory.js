@@ -1,7 +1,4 @@
-
 import { useEffect, useState } from "react";
-// import CourseLevelFilter from "./courselevel";
-import { motion } from "framer-motion";
 import "./style.css";
 
 export default function CourseCategorySection({
@@ -9,57 +6,85 @@ export default function CourseCategorySection({
   setCourses,
   allCourses
 }) {
-  const [search, setSearch] = useState("");
 
-  // 🔍 Automatic search while typing
+  const [search, setSearch] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  // FETCH CATEGORIES CREATED BY ADMIN
   useEffect(() => {
-    if (!search.trim()) {
-      setCourses(allCourses);
-    } else {
-      const filtered = allCourses.filter(item =>
-        item.title.toLowerCase().includes(search.toLowerCase())
+    fetch("http://localhost:7000/api/category")
+      .then(res => res.json())
+      .then(data => {
+        setCategories(data.data || []);
+      });
+  }, []);
+
+  // SEARCH FILTER
+  useEffect(() => {
+
+    let filtered = [...allCourses];
+
+    if (search.trim()) {
+      filtered = filtered.filter(course =>
+        course.courseName
+          ?.toLowerCase()
+          .includes(search.toLowerCase())
       );
-      setCourses(filtered);
     }
-  }, [search, allCourses, setCourses]);
+
+    if (activeCategory !== "all") {
+      filtered = filtered.filter(
+        c => c.category?.name === activeCategory
+      );
+    }
+
+    setCourses(filtered);
+
+  }, [search, activeCategory, allCourses, setCourses]);
 
   return (
     <section className="course-category-section">
 
-      {/* 🔍 SEARCH */}
-      <motion.div
-        className="course-search-wrapper"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
-        <div className="course-search-box">
-          <input
-            type="text"
-            className="course-search-input"
-            placeholder="Search courses, skills, institutions..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          
-        </div>
-      </motion.div>
+      {/* SEARCH */}
+      <div className="course-search-wrapper">
 
-      {/* 🔘 FILTER BUTTONS */}
-      <motion.div
-        className="category-wrapper"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <button className="category-btn glass">Degree Courses</button>
-        <button className="category-btn glass">Diploma Courses</button>
-        {/* <button className="category-btn glass">Institutions</button> */}
+        <input
+          type="text"
+          placeholder="Search courses..."
+          className="course-search-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-        {/* <CourseLevelFilter />  */}
-      </motion.div>
+      </div>
+
+      {/* CATEGORY FILTERS */}
+      <div className="category-wrapper">
+
+        <button
+          className={`category-btn ${activeCategory === "all" ? "active" : ""}`}
+          onClick={() => setActiveCategory("all")}
+        >
+          All
+        </button>
+
+        {categories.map(cat => (
+
+          <button
+            key={cat._id}
+            className={`category-btn ${
+              activeCategory === cat.name ? "active" : ""
+            }`}
+            onClick={() => setActiveCategory(cat.name)}
+          >
+            {cat.name}
+          </button>
+
+        ))}
+
+      </div>
+
     </section>
   );
 }

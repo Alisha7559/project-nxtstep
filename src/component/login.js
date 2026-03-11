@@ -91,7 +91,7 @@ const Login = () => {
 
       <p style={{ marginTop: "15px", textAlign: "center" }}>
         Don't have an account?{" "}
-        <Link to="/signup" style={{ color: "#0f172a", fontWeight: "bold" }}>
+        <Link to="/signup" style={{ color: "#1976d2", fontWeight: "bold" }}>
           Sign Up
         </Link>
       </p>

@@ -10,13 +10,13 @@ const About = () => {
 
         {/* LEFT CONTENT */}
         <div className="about-content">
-          <h2>About EduPath</h2>
+          <h2 >About NXTSTEP</h2>
           <p className="about-subtitle">
             AI-Driven Career Guidance & Smart Course Recommendations
           </p>
 
           <p>
-            EduPath is an intelligent career guidance and course recommendation
+            NXTSTEP is an intelligent career guidance and course recommendation
             platform that helps learners make informed decisions about their
             future. Our AI analyzes skills, interests, and career goals to
             deliver personalized learning paths.

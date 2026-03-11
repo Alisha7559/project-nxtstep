@@ -28,7 +28,7 @@ const Footer = () => {
       <div className="footer-content">
         {/* Brand */}
         <div className="footer-col">
-          <h2 className="logo">Edu<span>Path</span></h2>
+          <h2 className="logo">NXTSTEP</h2>
           <p>
             Empowering learners worldwide with quality education and career
             guidance.

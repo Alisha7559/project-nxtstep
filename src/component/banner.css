@@ -17,12 +17,12 @@
 
 .banner-container {
  
-  height: 100vh;               
+  height: 90vh;               
                                  
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;            
-  gap: 60px;
+  gap: 5px;
   width: 100%;
  
 }
@@ -274,4 +274,3 @@ align-items: center;
     grid-template-columns: 1fr;
   }
 }
-

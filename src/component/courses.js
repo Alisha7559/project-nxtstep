@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import "./style.css";
+import "./coursecard.css";
 import { useNavigate } from "react-router-dom";
 
 export default function ExactSecondVideoCard({

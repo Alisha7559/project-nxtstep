@@ -1,187 +1,203 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaComments, FaUserCircle, FaBars, FaTimes, FaSearch } from "react-icons/fa";
-import "./navbar.css";
+
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  InputBase,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText
+} from "@mui/material";
+
+import SearchIcon from "@mui/icons-material/Search";
+import Tooltip from "@mui/material/Tooltip";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import MenuIcon from "@mui/icons-material/Menu";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import logo from "../component/images/logofinall.png";
+import "./navbar.css";
 
 const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const [student, setStudent] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const [search, setSearch] = useState("");
+  const [student, setStudent] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width:900px)");
 
   useEffect(() => {
-
-    const syncLogin = () => {
-      const user = localStorage.getItem("student");
-      setStudent(user ? JSON.parse(user) : null);
-    };
-
-    syncLogin();
-    window.addEventListener("storage", syncLogin);
-
-    return () => window.removeEventListener("storage", syncLogin);
-
+    const user = localStorage.getItem("student");
+    setStudent(user ? JSON.parse(user) : null);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("student");
-    window.dispatchEvent(new Event("storage"));
-    navigate("/");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!search.trim()) return;
+    navigate(`/courses?search=${search}`);
+    setSearch("");
   };
 
-  /* 🔎 SEARCH FUNCTION */
+  const navItems = ["Home", "Courses", "Institutions", "Degrees"];
 
-  const handleSearch = (e) => {
-
-    e.preventDefault();
-
-    if (!search.trim()) return;
-
-    navigate(`/courses?search=${search}`);
-
-    setSearch("");
-
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
   return (
+    <>
+      <AppBar position="sticky" className="navbar-appbar">
+        <Toolbar className="navbar-toolbar">
 
-    <nav className="navbar-fixed">
+          {/* LEFT SECTION */}
+          <Box className="navbar-left">
 
-      <div className="navbar-container">
+            {/* LOGO */}
+            <Box
+              className="logo-container"
+              onClick={() => navigate("/")}
+            >
+              <img
+                src={logo}
+                alt="logo"
+                className="logo-img"
+              />
 
-        {/* LOGO */}
+              <Box>
+                <Typography className="logo-title">
+                  NXTSTEP
+                </Typography>
 
-        <div className="logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="Logo" className="logo-img" />
-        </div>
+                <Typography className="logo-subtitle" >
+                  Design Your Future
+                </Typography>
+              </Box>
+            </Box>
 
-        {/* HAMBURGER */}
+            {/* NAV LINKS */}
+            <Box className="nav-links">
+              {navItems.map((item) => (
+                <Button
+                  key={item}
+                  component={Link}
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  className="nav-button"
+                >
+                  {item}
+                </Button>
+              ))}
+            </Box>
 
-        <div
-          className="hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
-        </div>
+          </Box>
 
-        {/* NAV LINKS */}
+          {/* MOBILE MENU ICON */}
+          <Box className="mobile-menu">
+            <IconButton onClick={handleDrawerToggle}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
 
-        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+          {/* RIGHT SECTION */}
+          <Box className="right-section">
 
-          <li>
-            <Link to="/" onClick={()=>setMenuOpen(false)}>Home</Link>
-          </li>
+            {/* SEARCH */}
+            <Box
+              component="form"
+              onSubmit={handleSearch}
+              className="search-box"
+            >
+              <SearchIcon className="search-icon" />
 
-          <li>
-            <Link to="/courses" onClick={()=>setMenuOpen(false)}>Courses</Link>
-          </li>
+              <InputBase
+                placeholder="Search courses..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="search-input"
+              />
+            </Box>
 
-          <li>
-            <Link to="/institutions" onClick={()=>setMenuOpen(false)}>Institutions</Link>
-          </li>
-
-          <li>
-            <Link to="/degrees" onClick={()=>setMenuOpen(false)}>Degrees</Link>
-          </li>
-
-        </ul>
-
-        {/* SEARCH */}
-
-        <form className="navbar-search" onSubmit={handleSearch}>
-
-          <input
-            type="search"
-            placeholder="Search courses..."
-            value={search}
-            onChange={(e)=>setSearch(e.target.value)}
-          />
-
-          <button type="submit" className="search-btn">
-            <FaSearch/>
-          </button>
-
-        </form>
-
-        {/* RIGHT SIDE */}
-
-        <div className="navbar-actions">
-
-          <div
-            className="icon-btn"
-            onClick={() => navigate("/chatbot")}
-          >
-            <FaComments size={20} />
-          </div>
-
-          {!student ? (
-            <>
-              <button
-                className="login-btn"
-                onClick={() => navigate("/login")}
+            {/* CHAT */}
+            <Tooltip title="Chat with AI" arrow placement="bottom">
+              <IconButton
+                onClick={() => navigate("/chatbot")}
+                className="chat-icon"
               >
-                Login
-              </button>
+                <AutoAwesomeIcon fontSize="medium" />
+              </IconButton>
+            </Tooltip>
 
-              <button
-                className="signup-btn"
-                onClick={() => navigate("/signup")}
-              >
-                Sign Up
-              </button>
-            </>
-          ) : (
+            {/* LOGIN */}
+            <Button
+              onClick={() => navigate("/login")}
+              className="login-btn"
+            >
+              Login
+            </Button>
 
-            <div style={{ position: "relative" }}>
+            {/* SIGNUP */}
+            <Button
+              onClick={() => navigate("/signup")}
+              className="signup-btn"
+            >
+              Sign Up
+            </Button>
 
-              <div
-                style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-                onClick={() => setShowDropdown(!showDropdown)}
-              >
-                <FaUserCircle size={26}/>
-                <span style={{ marginLeft:6 }}>
-                  {student.studentname}
-                </span>
-              </div>
+          </Box>
 
-              {showDropdown && (
+        </Toolbar>
+      </AppBar>
 
-                <div className="dropdown">
+      {/* MOBILE DRAWER */}
+      <Drawer
+        anchor="left"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+      >
+        <Box className="drawer-box">
 
-                  <p><strong>Name:</strong> {student.studentname}</p>
+          <List>
 
-                  <p><strong>Email:</strong> {student.email}</p>
+            {navItems.map((item) => (
 
-                  <hr/>
+              <ListItem key={item} disablePadding>
 
-                  <button
-                    onClick={handleLogout}
-                    className="logout-btn"
-                  >
-                    Logout
-                  </button>
+                <ListItemButton
+                  component={Link}
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  onClick={handleDrawerToggle}
+                >
 
-                </div>
+                  <ListItemText
+                    primary={item}
+                    primaryTypographyProps={{
+                      className: "drawer-text"
+                    }}
+                  />
 
-              )}
+                </ListItemButton>
 
-            </div>
+              </ListItem>
 
-          )}
+            ))}
 
-        </div>
+          </List>
 
-      </div>
+        </Box>
+      </Drawer>
 
-    </nav>
-
+    </>
   );
-
 };
 
 export default Navbar;
+
