@@ -16,7 +16,7 @@ const About = () => {
           </p>
 
           <p>
-            EduPath is an intelligent career guidance and course recommendation
+            EduPath i s an intelligent career guidance and course recommendation
             platform that helps learners make informed decisions about their
             future. Our AI analyzes skills, interests, and career goals to
             deliver personalized learning paths.

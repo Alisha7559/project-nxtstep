@@ -20,6 +20,8 @@ import EnquiryForm from "./component/EnquiryForm";
 
 import CoursesPage from "./component/coursespage";
 import Degrees from "./component/degrees";
+import DegreePage from "./component/degreepage";
+import Institutions from "./component/institution";
 
 
 // ---------------- HOME PAGE ----------------
@@ -43,22 +45,22 @@ const Home = () => {
 
 
 // ---------------- DEGREE PAGE ----------------
-const DegreePage = () => {
-  return (
-    <>
-      <h2 style={{ textAlign: "center", margin: "40px 0" }}>
-        All Degree Programs
-      </h2>
+// const DegreePage = () => {
+//   return (
+//     <>
+//       <h2 style={{ textAlign: "center", margin: "40px 0" }}>
+//         All Degree Programs
+//       </h2>
 
-      {/* Show all degrees */}
-      <Degrees />
-    </>
-  );
-};
+//       {/* Show all degrees */}
+//       <Degrees />
+//     </>
+//   );
+// };
 
 
 // ---------------- OTHER PAGES ----------------
-const Institutions = () => <h2 className="page">Institutions Page</h2>;
+
 const Roles = () => <h2 className="page">Explore Roles Page</h2>;
 
 
@@ -96,7 +98,7 @@ function App() {
 
         {/* ENQUIRY */}
         <Route path="/enquiry/:id" element={<EnquiryForm />} />
-
+<Route path="/institutions" element={<Institutions />} />
       </Routes>
 
       <Footer />
