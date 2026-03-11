@@ -45,9 +45,9 @@ const Degrees = ({ limit = null, showViewAll = false }) => {
       <div className="degrees-header">
 
         <div className="degrees-header-left">
-          <span className="badge">Online Degrees</span>
+          <span className="badge"> Degrees</span>
           <h2>Degrees from Top Universities</h2>
-          <p>Earn accredited degrees 100% online</p>
+          <p>Earn accredited degrees 100% </p>
         </div>
 
         {showViewAll && (

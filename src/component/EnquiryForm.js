@@ -90,6 +90,7 @@ const EnquiryForm = () => {
       // SUCCESS MODAL
       setModalType("success");
       setModalMessage("Enquiry submitted successfully");
+      setModalMessage("Thanks for the enquiry. We will inform you within 3 days.");
       setModalOpen(true);
 
       setFormData({
