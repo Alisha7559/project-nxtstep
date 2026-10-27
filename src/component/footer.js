@@ -47,21 +47,20 @@ const Footer = () => {
         <div className="footer-col">
           <h4>Explore</h4>
           <ul>
-            <li><a href="/">Courses</a></li>
-            <li><a href="/">Institutions</a></li>
-            <li><a href="/">Online Degrees</a></li>
-            <li><a href="/">Career Roles</a></li>
+            <li><a href="/courses">Courses</a></li>
+            <li><a href="/institutions">Institutions</a></li>
+            <li><a href="/degrees">Online Degrees</a></li>
+            <li><a href="/roles">Career Roles</a></li>
           </ul>
         </div>
 
-        {/* Resources */}
+        {/* Portals */}
         <div className="footer-col">
-          <h4>Resources</h4>
+          <h4>Portals</h4>
           <ul>
-            <li><a href="/">AI Guide</a></li>
-            <li><a href="/">Blog</a></li>
-            <li><a href="/">Help Center</a></li>
-            <li><a href="/">Community</a></li>
+            <li><a href="http://localhost:3001" target="_blank" rel="noreferrer">Institution Dashboard ↗</a></li>
+            <li><a href="http://localhost:3002" target="_blank" rel="noreferrer">Admin Dashboard ↗</a></li>
+            <li><a href="/chatbot">AI Guide</a></li>
           </ul>
         </div>
 

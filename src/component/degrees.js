@@ -21,33 +21,68 @@ const Degrees = ({ limit = null, showViewAll = false }) => {
     })
       .then(res => res.json())
       .then(data => {
-
         const degreeCourses = (data?.data || []).filter(course =>
-          course.subcategory?.name?.toLowerCase() === "degree"
+          course.subcategory?.name?.toLowerCase() === "degree" ||
+          course.category?.name?.toLowerCase() === "degree"
         );
 
-        const finalCourses = limit
-          ? degreeCourses.slice(0, limit)
-          : degreeCourses;
-
-        setDegrees(finalCourses);
-        setLoading(false);
-
+        if (degreeCourses.length > 0) {
+          const finalCourses = limit ? degreeCourses.slice(0, limit) : degreeCourses;
+          setDegrees(finalCourses);
+          setLoading(false);
+        } else {
+          // Fallback to local degrees.json
+          fetch("/data/degrees.json")
+            .then(r => r.json())
+            .then(localData => {
+              const formatted = (localData || []).map(d => ({
+                _id: d.id,
+                courseName: d.title,
+                description: d.description,
+                institution: { name: d.university },
+                category: { name: "Degree" },
+                Level: d.level,
+                duration: d.duration,
+                fees: d.price ? d.price.replace(/[^0-9]/g, "") : "15000",
+                images: [d.image]
+              }));
+              setDegrees(limit ? formatted.slice(0, limit) : formatted);
+              setLoading(false);
+            })
+            .catch(() => setLoading(false));
+        }
+      })
+      .catch((err) => {
+        console.error("Degrees fetch error, falling back:", err);
+        fetch("/data/degrees.json")
+          .then(r => r.json())
+          .then(localData => {
+            const formatted = (localData || []).map(d => ({
+              _id: d.id,
+              courseName: d.title,
+              description: d.description,
+              institution: { name: d.university },
+              category: { name: "Degree" },
+              Level: d.level,
+              duration: d.duration,
+              fees: d.price ? d.price.replace(/[^0-9]/g, "") : "15000",
+              images: [d.image]
+            }));
+            setDegrees(limit ? formatted.slice(0, limit) : formatted);
+            setLoading(false);
+          })
+          .catch(() => setLoading(false));
       });
-
   }, [limit]);
 
   return (
-
     <section className="degrees-section">
-
       {/* HEADER */}
       <div className="degrees-header">
-
         <div className="degrees-header-left">
-          <span className="badge"> Degrees</span>
+          <span className="badge">Degrees</span>
           <h2>Degrees from Top Universities</h2>
-          <p>Earn accredited degrees 100% </p>
+          <p>Earn accredited degrees 100% online</p>
         </div>
 
         {showViewAll && (
@@ -58,27 +93,30 @@ const Degrees = ({ limit = null, showViewAll = false }) => {
             View All →
           </button>
         )}
-
       </div>
 
       {loading && <p>Loading degrees...</p>}
 
       <div className="degrees-grid">
+        {degrees.map((course) => {
+          const rawImg = course.images?.length ? course.images[0] : "";
+          const imgSrc = rawImg
+            ? rawImg.startsWith("http") || rawImg.startsWith("/")
+              ? rawImg
+              : `http://localhost:7000/${rawImg}`
+            : "/placeholder.png";
 
-        {degrees.map((course) => (
-
+          return (
           <div className="degree-card" key={course._id}>
-
             {/* IMAGE */}
             <div className="degree-img-wrapper">
-
               <img
-                src={
-                  course.images?.length
-                    ? `http://localhost:7000/${course.images[0]}`
-                    : "/placeholder.png"
-                }
+                src={imgSrc}
                 alt={course.courseName}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/images/degree1.png";
+                }}
               />
 
               <span className="degree-tag">
@@ -140,8 +178,8 @@ const Degrees = ({ limit = null, showViewAll = false }) => {
             </div>
 
           </div>
-
-        ))}
+          );
+        })}
 
       </div>
 

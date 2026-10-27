@@ -152,6 +152,27 @@ const Navbar = () => {
               Sign Up
             </Button>
 
+            {/* INSTITUTION PORTAL (Port 3001) */}
+            <Button
+              component="a"
+              href="http://localhost:3001"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inst-portal-btn"
+              style={{
+                border: "1.5px solid #2563eb",
+                color: "#2563eb",
+                borderRadius: "8px",
+                padding: "6px 14px",
+                fontWeight: 600,
+                textTransform: "none",
+                fontSize: "13px",
+                whiteSpace: "nowrap"
+              }}
+            >
+              Institution Portal ↗
+            </Button>
+
           </Box>
 
         </Toolbar>

@@ -16,7 +16,24 @@ export default function CourseCategorySection({
     fetch("http://localhost:7000/api/category")
       .then(res => res.json())
       .then(data => {
-        setCategories(data.data || []);
+        if (Array.isArray(data.data) && data.data.length > 0) {
+          setCategories(data.data);
+        } else {
+          setCategories([
+            { _id: "1", name: "Engineering" },
+            { _id: "2", name: "Business" },
+            { _id: "3", name: "Design" },
+            { _id: "4", name: "Health" }
+          ]);
+        }
+      })
+      .catch(() => {
+        setCategories([
+          { _id: "1", name: "Engineering" },
+          { _id: "2", name: "Business" },
+          { _id: "3", name: "Design" },
+          { _id: "4", name: "Health" }
+        ]);
       });
   }, []);
 

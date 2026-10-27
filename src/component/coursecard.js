@@ -9,7 +9,6 @@ export default function CourseCard() {
   const navigate = useNavigate(); // ✅ correct place
 
   useEffect(() => {
-
     fetch("http://localhost:7000/api/institute/allcourse", {
       method: "GET",
       credentials: "include",
@@ -17,43 +16,78 @@ export default function CourseCard() {
     })
       .then((res) => res.json())
       .then((data) => {
-
-        console.log("COURSES:", data.data);
-        setCourses(Array.isArray(data.data) ? data.data : []);
-
+        if (Array.isArray(data.data) && data.data.length > 0) {
+          setCourses(data.data);
+        } else {
+          // Fallback to local courses.json if backend has no courses yet
+          fetch("/data/courses.json")
+            .then((r) => r.json())
+            .then((local) => {
+              const formatted = (local || []).map((c) => ({
+                _id: c.id,
+                courseName: c.title,
+                description: c.description,
+                category: { name: c.category },
+                rating: c.rating,
+                level: c.level,
+                mode: "Online",
+                totalSeats: 100,
+                fees: c.price ? c.price.replace(/[^0-9]/g, "") : "2999",
+                images: [c.image],
+              }));
+              setCourses(formatted);
+            })
+            .catch(() => setCourses([]));
+        }
       })
-      .catch((err) => console.error(err));
-
+      .catch((err) => {
+        console.error("API error, falling back to local courses:", err);
+        fetch("/data/courses.json")
+          .then((r) => r.json())
+          .then((local) => {
+            const formatted = (local || []).map((c) => ({
+              _id: c.id,
+              courseName: c.title,
+              description: c.description,
+              category: { name: c.category },
+              rating: c.rating,
+              level: c.level,
+              mode: "Online",
+              totalSeats: 100,
+              fees: c.price ? c.price.replace(/[^0-9]/g, "") : "2999",
+              images: [c.image],
+            }));
+            setCourses(formatted);
+          })
+          .catch(() => setCourses([]));
+      });
   }, []);
 
   const fallbackImg = "/placeholder.png";
 
   return (
-
     <section className="courses-section">
-
       <div className="courses-header">
-
         <div>
           <h2>Trending Courses</h2>
           <p>Most popular courses this month</p>
         </div>
-            <button
-                    className="view-all"
-                    onClick={() => navigate(`/courses`)}
-                  >
-                    View All
-                  </button>
+        <button
+          className="view-all"
+          onClick={() => navigate(`/courses`)}
+        >
+          View All
+        </button>
       </div>
 
       <div className="courses-grid">
-
         {(courses || []).slice(0, 3).map((course) => {
-
-          const imgSrc =
-            course.images && course.images.length > 0
-              ? `http://localhost:7000/${course.images[0]}`
-              : fallbackImg;
+          const rawImg = course.images && course.images.length > 0 ? course.images[0] : "";
+          const imgSrc = rawImg
+            ? rawImg.startsWith("http") || rawImg.startsWith("/")
+              ? rawImg
+              : `http://localhost:7000/${rawImg}`
+            : fallbackImg;
 
           return (
 
@@ -61,7 +95,14 @@ export default function CourseCard() {
 
               <div className="course-image">
 
-                <img src={imgSrc} alt={course.title} />
+                <img
+                  src={imgSrc}
+                  alt={course.courseName || course.title || "Course"}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/images/course-web.jpg";
+                  }}
+                />
 
                 <span className="badge level">
                   {course.level || "N/A"}
